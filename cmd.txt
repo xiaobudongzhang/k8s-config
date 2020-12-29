@@ -1,0 +1,6 @@
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+
+
+kube-proxy-token-hbdvw
+
+helm install my-mysql  bitnami/mysql --version 8.2.3 --set image.tag=5.7 --set auth.rootPassword=7777777! --set primary.persistence.existingClaim=local-claim --set volumePermissions.enabled=true

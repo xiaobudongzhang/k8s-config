@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: mysql-g
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 31400
+      name: mysql
+      protocol: TCP
+    hosts:
+    - mysql.byz.com
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mysql-vs
+spec:
+  hosts:
+  - mysql.byz.com
+  gateways:
+  - mysql-g
+  tcp:
+  - match:
+    - port: 31400
+    route:
+    - destination:
+        host: my-mysql
+        port:
+          number: 3306
